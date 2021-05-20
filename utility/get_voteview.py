@@ -1,5 +1,5 @@
-import pandas as pds
-import numpy as np
+from pandas import read_csv
+from numpy import arange
 
 def generate_df(loc, session, chamber):
 
@@ -9,7 +9,7 @@ def generate_df(loc, session, chamber):
         chamber -> either Senate or House
     '''
 
-    sessions = np.arange(1, 117)
+    sessions = arange(1, 117)
 
     try:
         if int(session) in sessions:
@@ -28,7 +28,7 @@ def generate_df(loc, session, chamber):
                 print('The chamber must either be House or Senate!')
                 return None
 
-            df = pds.read_csv(url)
+            df = read_csv(url)
 
             return df
 
@@ -65,3 +65,13 @@ def get_votes(session, chamber):
     '''
 
     return generate_df('votes', session, chamber)
+
+    
+def get_parties(session, chamber):
+
+    '''
+        session -> the session of Congress, i.e. 115
+        chamber -> either Senate or House
+    '''
+
+    return generate_df('parties', session, chamber)
