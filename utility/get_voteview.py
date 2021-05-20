@@ -39,7 +39,7 @@ def generate_df(loc, session, chamber):
         print('The session must be convertable to an integer!')
         return None
 
-def get_ideology_df(session, chamber):
+def get_ideology(session, chamber):
 
     '''
         session -> the session of Congress, i.e. 115
@@ -48,7 +48,7 @@ def get_ideology_df(session, chamber):
 
     return generate_df('members', session, chamber)
 
-def get_bills_df(session, chamber):
+def get_bills(session, chamber):
 
     '''
         session -> the session of Congress, i.e. 115
@@ -56,3 +56,12 @@ def get_bills_df(session, chamber):
     '''
 
     return generate_df('rollcalls', session, chamber)
+
+def get_votes(session, chamber):
+
+    '''
+        session -> the session of Congress, i.e. 115
+        chamber -> either Senate or House
+    '''
+
+    return generate_df('votes', session, chamber)
