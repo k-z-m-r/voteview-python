@@ -1,9 +1,10 @@
 import pandas as pds
 import numpy as np
 
-def get_ideology_df(session, chamber):
+def generate_df(loc, session, chamber):
 
     '''
+        loc -> the type of data being located.
         session -> the session of Congress, i.e. 115
         chamber -> either Senate or House
     '''
@@ -18,18 +19,18 @@ def get_ideology_df(session, chamber):
                 session = "0" + session
 
             if chamber.title() == 'House':
-                url = 'https://voteview.com/static/data/out/members/H{}_members.csv'.format(session)
+                url = 'https://voteview.com/static/data/out/{}/H{}_{}.csv'.format(loc, session, loc)
 
             elif chamber.title() == 'Senate':
-                url = 'https://voteview.com/static/data/out/members/S{}_members.csv'.format(session)
+                url = 'https://voteview.com/static/data/out/{}/S{}_{}.csv'.format(loc, session, loc)
 
             else:
                 print('The chamber must either be House or Senate!')
                 return None
-    
-            ideology_df = pds.read_csv(url)
 
-            return ideology_df
+            df = pds.read_csv(url)
+
+            return df
 
         else:
             print('The session must be between 1 and 116!')
@@ -38,6 +39,20 @@ def get_ideology_df(session, chamber):
         print('The session must be convertable to an integer!')
         return None
 
-df = get_ideology_df('115', 'senate')
+def get_ideology_df(session, chamber):
 
-print(df.keys())
+    '''
+        session -> the session of Congress, i.e. 115
+        chamber -> either Senate or House
+    '''
+
+    return generate_df('members', session, chamber)
+
+def get_bills_df(session, chamber):
+
+    '''
+        session -> the session of Congress, i.e. 115
+        chamber -> either Senate or House
+    '''
+
+    return generate_df('rollcalls', session, chamber)
